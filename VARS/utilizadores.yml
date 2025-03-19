@@ -1,0 +1,9 @@
+users:
+  - name: mnunes
+    admin: true
+
+  - name: rmarques
+    admin: false
+
+  - name: csobral
+    admin: true

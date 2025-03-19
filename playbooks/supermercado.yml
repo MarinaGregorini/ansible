@@ -1,0 +1,41 @@
+- name: Supermercado Boa Sorte
+  hosts: app_supermercado
+  become: true
+  gather_facts: true
+
+  tasks:
+
+    - name: Instalar pacotes
+      ansible.builtin.package:
+        name:
+          - git
+          - py3-pip
+          - py3-virtualenv
+        state: present
+
+    - name: Git clone
+      ansible.builtin.git:
+        repo: "https://github.com/MarinaGregorini/SupermercadoBoaSorte.git"
+        dest: /home/upskill-admin/projeto_ansible
+        version: main
+        force: true
+        update: true
+
+    - name: Criar ambiente virtual e Instalar dependências
+      ansible.builtin.pip:
+        requirements: /home/upskill-admin/projeto_ansible/requirements.txt
+        virtualenv: /home/upskill-admin/projeto_ansible/.venv
+
+    - name: Criar script para iniciar a aplicação
+      ansible.builtin.copy:
+        dest: /home/upskill-admin/projeto_ansible/start_app.sh
+        content: |
+          #!/bin/sh
+          /home/upskill-admin/projeto_ansible/.venv/bin/python /home/upskill-admin/projeto_ansible/app.py
+        mode: '0755'
+
+    - name: Criar link simbólico no /usr/local/bin
+      ansible.builtin.file:
+        src: /home/upskill-admin/projeto_ansible/start_app.sh
+        dest: /usr/local/bin/cadeia-logistica
+        state: link

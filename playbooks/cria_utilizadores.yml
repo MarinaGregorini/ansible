@@ -1,0 +1,15 @@
+- name: Cria utilizadores a partir de utilizadores.yml
+  hosts: all_servers
+  become: true
+  gather_facts: true
+  vars_files:
+    - VARS/utilizadores.yml
+
+  tasks:
+    - name: Criar utilizadores e configurar permissões
+      ansible.builtin.user:
+        name: "{{ item.name }}"
+        groups: "{{ 'sudo' if item.admin else omit }}"
+        password: "{{ '!' }}"
+        state: present
+      loop: "{{ users }}"

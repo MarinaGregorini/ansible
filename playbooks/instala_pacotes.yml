@@ -1,0 +1,32 @@
+- name: Instala os pacotes definidos em pacotes.yml
+  hosts: all
+  become: true
+  gather_facts: true
+  vars_files:
+    - VARS/pacotes.yml
+
+  tasks:
+    - name: Atualizar repositórios do Alpine
+      ansible.builtin.package:
+        update_cache: true
+
+    - name: Instalar pacotes para grupo software-1
+      ansible.builtin.package:
+        name: "{{ item }}"
+        state: present
+      loop: "{{ software_1 }}"
+      when: inventory_hostname in groups['software-1']
+
+    - name: Instalar pacotes para grupo software-2
+      ansible.builtin.package:
+        name: "{{ item }}"
+        state: present
+      loop: "{{ software_2 }}"
+      when: inventory_hostname in groups['software-2']
+
+    - name: Instalar pacotes para grupo software-3
+      ansible.builtin.package:
+        name: "{{ item }}"
+        state: present
+      loop: "{{ software_3 }}"
+      when: inventory_hostname in groups['software-3']

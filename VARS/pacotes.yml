@@ -1,0 +1,12 @@
+software-1:
+  - sl
+  - vim
+  - btop
+
+software-2:
+  - iper3
+  - htop
+
+software-3:
+  - fortune
+  - curl
