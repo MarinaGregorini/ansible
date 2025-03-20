@@ -1,0 +1,14 @@
+# Grupo 4: Bruna Dutra, Marina Gregorini, Marta Martins e Tiago Silva
+
+software_1:
+  - sl
+  - vim
+  - btop
+
+software_2:
+  - iperf3
+  - htop
+
+software_3:
+  - fortune
+  - curl

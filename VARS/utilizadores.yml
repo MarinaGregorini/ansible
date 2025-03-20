@@ -1,0 +1,11 @@
+# Grupo 4: Bruna Dutra, Marina Gregorini, Marta Martins e Tiago Silva
+
+users:
+  - name: mnunes
+    admin: true
+
+  - name: rmarques
+    admin: false
+
+  - name: csobral
+    admin: true

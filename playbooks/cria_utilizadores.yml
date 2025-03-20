@@ -1,0 +1,34 @@
+# Grupo 4: Bruna Dutra, Marina Gregorini, Marta Martins e Tiago Silva
+
+- name: Cria utilizadores a partir de utilizadores.yml
+  hosts: all_servers
+  become: true
+  gather_facts: true
+  vars_files:
+    - ../VARS/utilizadores.yml
+
+  tasks:
+
+    - name: Garantir que o grupo sudo existe
+      ansible.builtin.group:
+        name: sudo
+        state: present
+
+    - name: Instalar o pacote sudo
+      ansible.builtin.package:
+        name: sudo
+        state: present
+
+    - name: Configurar o sudo para permitir o grupo sudo
+      ansible.builtin.lineinfile:
+        path: /etc/sudoers
+        line: "%sudo ALL=(ALL) ALL" # Adiciona ou garante que a linha permita que o grupo sudo tenha acesso total
+        validate: "visudo -cf %s" # Valida a configuração do sudoers para evitar erros de sintaxe
+        state: present
+
+    - name: Criar utilizadores e configurar permissões
+      ansible.builtin.user:
+        name: "{{ item.name }}"
+        groups: "{{ 'sudo' if item.admin else omit }}" # Adiciona ao grupo 'sudo' apenas se o utilizador for admin
+        state: present
+      loop: "{{ users }}"

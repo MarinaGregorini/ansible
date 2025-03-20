@@ -1,0 +1,35 @@
+# Grupo 4: Bruna Dutra, Marina Gregorini, Marta Martins e Tiago Silva
+
+- name: Instala os pacotes definidos em pacotes.yml
+  hosts: all
+  become: true
+  gather_facts: true
+  vars_files:
+    - ../VARS/pacotes.yml
+
+  tasks:
+    - name: Atualizar repositórios do Alpine
+      ansible.builtin.package:
+        update_cache: true
+
+    - name: Instalar pacotes para grupo software_1
+      ansible.builtin.package:
+        name: "{{ item }}"
+        state: present
+      loop: "{{ software_1 }}"
+      when: inventory_hostname in groups['software_1'] # Executa apenas se o host pertence ao grupo
+
+
+    - name: Instalar pacotes para grupo software_2
+      ansible.builtin.package:
+        name: "{{ item }}"
+        state: present
+      loop: "{{ software_2 }}"
+      when: inventory_hostname in groups['software_2']
+
+    - name: Instalar pacotes para grupo software_3
+      ansible.builtin.package:
+        name: "{{ item }}"
+        state: present
+      loop: "{{ software_3 }}"
+      when: inventory_hostname in groups['software_3']

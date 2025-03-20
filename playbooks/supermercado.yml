@@ -1,0 +1,43 @@
+# Grupo 4: Bruna Dutra, Marina Gregorini, Marta Martins e Tiago Silva
+
+- name: Supermercado Boa Sorte
+  hosts: app_supermercado
+  become: true
+  gather_facts: true
+
+  tasks:
+
+    - name: Instalar pacotes
+      ansible.builtin.package:
+        name:
+          - git
+          - py3-pip
+          - py3-virtualenv
+        state: present
+
+    - name: Clonar o repositório Supermercado Boa Sorte
+      ansible.builtin.git:
+        repo: "https://github.com/MarinaGregorini/SupermercadoBoaSorte.git"
+        dest: /home/upskill-admin/projeto_ansible
+        version: main
+        force: true # Força a substituição caso o repositório já exista
+        update: true # Atualiza o repositório para garantir que está na versão mais recente
+
+    - name: Criar ambiente virtual e Instalar dependências
+      ansible.builtin.pip:
+        requirements: /home/upskill-admin/projeto_ansible/requirements.txt
+        virtualenv: /home/upskill-admin/projeto_ansible/.venv
+
+    - name: Criar script para iniciar a aplicação
+      ansible.builtin.copy:
+        dest: /home/upskill-admin/projeto_ansible/start_app.sh
+        content: |
+          #!/bin/sh
+          /home/upskill-admin/projeto_ansible/.venv/bin/python /home/upskill-admin/projeto_ansible/app.py
+        mode: '0755' # Permite a execução do script
+
+    - name: Criar link simbólico no /usr/local/bin
+      ansible.builtin.file:
+        src: /home/upskill-admin/projeto_ansible/start_app.sh
+        dest: /usr/local/bin/cadeia-logistica # Cria um atalho global para executar a aplicação
+        state: link
