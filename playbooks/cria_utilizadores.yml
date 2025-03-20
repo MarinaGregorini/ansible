@@ -1,7 +1,7 @@
 # Grupo 4: Bruna Dutra, Marina Gregorini, Marta Martins e Tiago Silva
 
 - name: Cria utilizadores a partir de utilizadores.yml
-  hosts: app_supermercado
+  hosts: all_servers
   become: true
   gather_facts: true
   vars_files:
@@ -26,27 +26,9 @@
         validate: "visudo -cf %s"
         state: present
 
-    - name: Instalar o pacote bash
-      ansible.builtin.package:
-        name: bash
-        state: present
-
     - name: Criar utilizadores e configurar permissões
       ansible.builtin.user:
         name: "{{ item.name }}"
         groups: "{{ 'sudo' if item.admin else omit }}"
-        password: "$6$NjYUNAI6YmRlbF2a$wDiaN62c8VRgsupSK1yOkENaNn1BRrHCZaSqN3acGD9KpPSudSjxs4dM5UPwzi88skp6CGo1mJXOa4CTKHEro0" # senhapadrao
-        shell: /bin/bash
         state: present
       loop: "{{ users }}"
-
-    - name: Instalar o pacote shadow
-      ansible.builtin.package:
-        name: shadow
-        state: present
-
-    - name: Forçar expiração da senha
-      ansible.builtin.command: |
-        passwd -e "{{ item.name }}"
-      loop: "{{ users }}"
-      changed_when: false
