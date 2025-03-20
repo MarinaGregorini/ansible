@@ -10,23 +10,23 @@
       ansible.builtin.package:
         update_cache: true
 
-    - name: Instalar pacotes para grupo software-1
+    - name: Instalar pacotes para grupo software_1
       ansible.builtin.package:
         name: "{{ item }}"
         state: present
       loop: "{{ software_1 }}"
-      when: inventory_hostname in groups['software-1']
+      when: inventory_hostname in groups['software_1']
 
-    - name: Instalar pacotes para grupo software-2
+    - name: Instalar pacotes para grupo software_2
       ansible.builtin.package:
         name: "{{ item }}"
         state: present
       loop: "{{ software_2 }}"
-      when: inventory_hostname in groups['software-2']
+      when: inventory_hostname in groups['software_2']
 
-    - name: Instalar pacotes para grupo software-3
+    - name: Instalar pacotes para grupo software_3
       ansible.builtin.package:
         name: "{{ item }}"
         state: present
       loop: "{{ software_3 }}"
-      when: inventory_hostname in groups['software-3']
+      when: inventory_hostname in groups['software_3']

@@ -6,6 +6,24 @@
     - VARS/utilizadores.yml
 
   tasks:
+
+    - name: Garantir que o grupo sudo existe
+      ansible.builtin.group:
+        name: sudo
+        state: present
+
+    - name: Instalar o pacote sudo
+      ansible.builtin.package:
+        name: sudo
+        state: present
+
+    - name: Configurar o sudo para permitir o grupo sudo
+      ansible.builtin.lineinfile:
+        path: /etc/sudoers
+        line: "%sudo ALL=(ALL) ALL"
+        validate: "visudo -cf %s"
+        state: present
+
     - name: Criar utilizadores e configurar permissões
       ansible.builtin.user:
         name: "{{ item.name }}"
