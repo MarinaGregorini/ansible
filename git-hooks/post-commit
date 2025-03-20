@@ -1,5 +1,7 @@
 #!/bin/sh
 
+# Grupo 4: Bruna Dutra, Marina Gregorini, Marta Martins e Tiago Silva
+
 REPO_DIR="$(git rev-parse --show-toplevel)"
 
 PLAYBOOKS="supermercado.yml cria_utilizadores.yml instala_pacotes.yml"

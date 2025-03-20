@@ -1,3 +1,5 @@
+# Grupo 4: Bruna Dutra, Marina Gregorini, Marta Martins e Tiago Silva
+
 ansible==11.3.0
 ansible-compat==25.1.4
 ansible-core==2.18.3

@@ -1,3 +1,5 @@
+# Grupo 4: Bruna Dutra, Marina Gregorini, Marta Martins e Tiago Silva
+
 - name: Instala os pacotes definidos em pacotes.yml
   hosts: all
   become: true

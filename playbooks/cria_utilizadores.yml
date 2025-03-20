@@ -1,3 +1,5 @@
+# Grupo 4: Bruna Dutra, Marina Gregorini, Marta Martins e Tiago Silva
+
 - name: Cria utilizadores a partir de utilizadores.yml
   hosts: all_servers
   become: true
