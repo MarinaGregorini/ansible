@@ -22,13 +22,13 @@
     - name: Configurar o sudo para permitir o grupo sudo
       ansible.builtin.lineinfile:
         path: /etc/sudoers
-        line: "%sudo ALL=(ALL) ALL"
-        validate: "visudo -cf %s"
+        line: "%sudo ALL=(ALL) ALL" # Adiciona ou garante que a linha permita que o grupo sudo tenha acesso total
+        validate: "visudo -cf %s" # Valida a configuração do sudoers para evitar erros de sintaxe
         state: present
 
     - name: Criar utilizadores e configurar permissões
       ansible.builtin.user:
         name: "{{ item.name }}"
-        groups: "{{ 'sudo' if item.admin else omit }}"
+        groups: "{{ 'sudo' if item.admin else omit }}" # Adiciona ao grupo 'sudo' apenas se o usuário for admin
         state: present
       loop: "{{ users }}"

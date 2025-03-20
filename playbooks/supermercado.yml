@@ -20,8 +20,8 @@
         repo: "https://github.com/MarinaGregorini/SupermercadoBoaSorte.git"
         dest: /home/upskill-admin/projeto_ansible
         version: main
-        force: true
-        update: true
+        force: true # Força a substituição caso o repositório já exista
+        update: true # Atualiza o repositório para garantir que está na versão mais recente
 
     - name: Criar ambiente virtual e Instalar dependências
       ansible.builtin.pip:
@@ -34,10 +34,10 @@
         content: |
           #!/bin/sh
           /home/upskill-admin/projeto_ansible/.venv/bin/python /home/upskill-admin/projeto_ansible/app.py
-        mode: '0755'
+        mode: '0755' # Permite a execução do script
 
     - name: Criar link simbólico no /usr/local/bin
       ansible.builtin.file:
         src: /home/upskill-admin/projeto_ansible/start_app.sh
-        dest: /usr/local/bin/cadeia-logistica
+        dest: /usr/local/bin/cadeia-logistica # Cria um atalho global para executar a aplicação
         state: link

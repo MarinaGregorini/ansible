@@ -17,7 +17,8 @@
         name: "{{ item }}"
         state: present
       loop: "{{ software_1 }}"
-      when: inventory_hostname in groups['software_1']
+      when: inventory_hostname in groups['software_1'] # Executa apenas se o host pertence ao grupo
+
 
     - name: Instalar pacotes para grupo software_2
       ansible.builtin.package:
