@@ -6,7 +6,7 @@ software_1:
   - btop
 
 software_2:
-  - iper3
+  - iperf3
   - htop
 
 software_3:

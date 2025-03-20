@@ -7,7 +7,9 @@ REPO_DIR="$(git rev-parse --show-toplevel)"
 PLAYBOOKS="supermercado.yml cria_utilizadores.yml instala_pacotes.yml"
 
 for playbook in $PLAYBOOKS; do
+
   PLAYBOOK_PATH="$REPO_DIR/playbooks/$playbook"
 
-    exec "$REPO_DIR/.venv/bin/ansible-playbook" "$PLAYBOOK_PATH" --ask-pass --ask-become-pass -vvv
+    "$REPO_DIR/.venv/bin/ansible-playbook" "$PLAYBOOK_PATH" --ask-pass --ask-become-pass -vvv
+
 done

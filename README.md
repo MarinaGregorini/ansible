@@ -63,12 +63,57 @@ Agora, toda vez que um commit for feito, os playbooks serão executados automati
 
 ---
 
+## Testando as Implementações
+
+### Conectar-se às VMs
+Para testar se as configurações foram aplicadas corretamente, conecte-se às VMs via SSH utilizando o usuário **upskill-admin**:
+```bash
+ssh upskill-admin@10.101.151.xxx
+```
+Substitua `10.101.151.xxx` por um dos IPs listados no ficheiro `inventory.ini`.
+
+### Verificar pacotes instalados e grupos de utilizadores
+Dentro da VM, execute o seguinte comando para validar a instalação dos pacotes e visualizar os grupos de utilizadores:
+```bash
+echo "sl: $(sl --version)" && \
+echo "vim: $(vim --version | head -n 1)" && \
+echo "btop: $(btop --version | head -n 1)" && \
+echo "iperf3: $(iperf3 --version | head -n 1)" && \
+echo "htop: $(htop --version | head -n 1)" && \
+echo "fortune: $(fortune --version | head -n 1)" && \
+echo "curl: $(curl --version | head -n 1)" && \
+echo -e "\nGrupos no sistema:" && \
+getent group
+```
+
+### Testar acesso com utilizadores criados
+Para verificar se as contas de utilizadores foram criadas corretamente e se a senha está expirada, tente acessar a home de um dos utilizadores:
+```bash
+su - mnunes
+```
+Caso a senha esteja expirada, o sistema solicitará a alteração antes de permitir o login.
+
+### Inicializar a aplicação Python
+Na VM **10.101.151.190**, execute o comando abaixo para iniciar a aplicação:
+```bash
+cadeia-logistica
+```
+A aplicação estará disponível em: [http://10.101.151.190:5000](http://10.101.151.190:5000)
+
+---
+
 ## Comando Ad-hoc para Remover Usuários
 Para remover utilizadores de todas as VMs, utilize o comando ad-hoc abaixo:
 ```bash
-ansible all -m ansible.builtin.user -a "name={{ item }} state=absent remove=yes" -e "users=mnunes,rmarques,csobral" --become
+ansible all_servers -m ansible.builtin.user -a "name={{ users }} state=absent remove=yes" -e "users=mnunes,rmarques,csobral" --ask-become-pass --ask-pass --become
 ```
 Isso garante que os utilizadores serão removidos completamente das máquinas.
+
+### Testar remoção de utilizadores
+Após executar o comando de remoção, verifique se os utilizadores foram realmente excluídos tentando listar suas home directories:
+```bash
+ls /home/
+```
 
 ---
 

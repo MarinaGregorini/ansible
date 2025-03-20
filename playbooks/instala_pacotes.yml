@@ -5,7 +5,7 @@
   become: true
   gather_facts: true
   vars_files:
-    - VARS/pacotes.yml
+    - ../VARS/pacotes.yml
 
   tasks:
     - name: Atualizar repositórios do Alpine
