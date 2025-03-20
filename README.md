@@ -56,8 +56,7 @@ pip install -r requirements.txt
 ### Configurar o Git Hook `post-commit`
 Para garantir a execução automática dos playbooks após cada commit, copie e configure o hook:
 ```bash
-cp git-hooks/post-commit .git/hooks/post-commit
-chmod +x .git/hooks/post-commit
+cp git-hooks/post-commit .git/hooks/post-commit && chmod +x .git/hooks/post-commit
 ```
 Agora, toda vez que um commit for feito, os playbooks serão executados automaticamente.
 
