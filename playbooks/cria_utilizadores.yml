@@ -29,6 +29,6 @@
     - name: Criar utilizadores e configurar permissões
       ansible.builtin.user:
         name: "{{ item.name }}"
-        groups: "{{ 'sudo' if item.admin else omit }}" # Adiciona ao grupo 'sudo' apenas se o usuário for admin
+        groups: "{{ 'sudo' if item.admin else omit }}" # Adiciona ao grupo 'sudo' apenas se o utilizador for admin
         state: present
       loop: "{{ users }}"

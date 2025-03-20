@@ -86,13 +86,6 @@ echo -e "\nGrupos no sistema:" && \
 getent group
 ```
 
-### Testar acesso com utilizadores criados
-Para verificar se as contas de utilizadores foram criadas corretamente e se a senha está expirada, tente acessar a home de um dos utilizadores:
-```bash
-su - mnunes
-```
-Caso a senha esteja expirada, o sistema solicitará a alteração antes de permitir o login.
-
 ### Inicializar a aplicação Python
 Na VM **10.101.151.190**, execute o comando abaixo para iniciar a aplicação:
 ```bash
@@ -102,7 +95,7 @@ A aplicação estará disponível em: [http://10.101.151.190:5000](http://10.101
 
 ---
 
-## Comando Ad-hoc para Remover Usuários
+## Comando Ad-hoc para Remover Utilizadores
 Para remover utilizadores de todas as VMs, utilize o comando ad-hoc abaixo:
 ```bash
 ansible all_servers -m shell -a "for user in mnunes rmarques csobral; do userdel -r \$user; done" --ask-become-pass --ask-pass --become
@@ -110,7 +103,7 @@ ansible all_servers -m shell -a "for user in mnunes rmarques csobral; do userdel
 Isso garante que os utilizadores serão removidos completamente das máquinas.
 
 ### Testar remoção de utilizadores
-Após executar o comando de remoção, verifique se os utilizadores foram realmente excluídos tentando listar suas home directories:
+Após executar o comando de remoção, entre novamente em uma VM e verifique se os utilizadores foram realmente excluídos:
 ```bash
 ls /home/ && \
 getent group
