@@ -13,7 +13,7 @@
           - py3-virtualenv
         state: present
 
-    - name: Git clone
+    - name: Clonar o repositório Supermercado Boa Sorte
       ansible.builtin.git:
         repo: "https://github.com/MarinaGregorini/SupermercadoBoaSorte.git"
         dest: /home/upskill-admin/projeto_ansible
