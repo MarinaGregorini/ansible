@@ -105,14 +105,15 @@ A aplicação estará disponível em: [http://10.101.151.190:5000](http://10.101
 ## Comando Ad-hoc para Remover Usuários
 Para remover utilizadores de todas as VMs, utilize o comando ad-hoc abaixo:
 ```bash
-ansible all_servers -m ansible.builtin.user -a "name={{ users }} state=absent remove=yes" -e "users=mnunes,rmarques,csobral" --ask-become-pass --ask-pass --become
+ansible all_servers -m shell -a "for user in mnunes rmarques csobral; do userdel -r \$user; done" --ask-become-pass --ask-pass --become
 ```
 Isso garante que os utilizadores serão removidos completamente das máquinas.
 
 ### Testar remoção de utilizadores
 Após executar o comando de remoção, verifique se os utilizadores foram realmente excluídos tentando listar suas home directories:
 ```bash
-ls /home/
+ls /home/ && \
+getent group
 ```
 
 ---
