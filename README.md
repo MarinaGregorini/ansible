@@ -23,29 +23,30 @@ done
 ### Criar diretório e configurar ambiente no WSL
 Abra uma nova janela no **VS Code** conectada ao **WSL** e crie o diretório do projeto:
 ```bash
-mkdir ansible
+mkdir ansible && \
 cd ansible
 ```
 
 ### Criar e ativar ambiente virtual
 Execute os comandos abaixo para criar e ativar um ambiente virtual Python:
 ```bash
-python3 -m venv .venv
+python3 -m venv .venv && \
 source .venv/bin/activate
 ```
 
 ### Clonar o repositório do GitHub
 Conecte o diretório ao repositório remoto e clone-o:
 ```bash
-git remote add origin https://github.com/MarinaGregorini/ansible.git
-git clone https://github.com/MarinaGregorini/ansible.git
+git remote add origin https://github.com/MarinaGregorini/ansible.git && \
+git clone https://github.com/MarinaGregorini/ansible.git && \
 cd ansible
 ```
 
 ### Instalar dependências necessárias
 Antes de executar os playbooks, instale os pacotes requeridos:
 ```bash
-sudo apt update && sudo apt install python3-pip -y
+sudo apt update && \
+sudo apt install python3-pip -y && \
 pip install -r requirements.txt
 ```
 
@@ -56,7 +57,8 @@ pip install -r requirements.txt
 ### Configurar o Git Hook `post-commit`
 Para garantir a execução automática dos playbooks após cada commit, copie e configure o hook:
 ```bash
-cp git-hooks/post-commit .git/hooks/post-commit && chmod +x .git/hooks/post-commit
+cp git-hooks/post-commit .git/hooks/post-commit && \
+chmod +x .git/hooks/post-commit
 ```
 Agora, toda vez que um commit for feito, os playbooks serão executados automaticamente.
 
